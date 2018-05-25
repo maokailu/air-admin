@@ -8,7 +8,7 @@ import AdvancedSearchForm from './search-box';
 import CollectionsPage from './addUser';
 import './style.css';
 
-export default class FlightsUnit extends React.Component {
+export default class OrderUnit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,7 +16,8 @@ export default class FlightsUnit extends React.Component {
     };
   }
   componentDidMount() {
-    request.getPromise(`http://localhost:8080/getFlightsrsBySearch`, {departAirportCode:'SHA',departAirportCode:'PEK',classType: 0}).then(json => {
+    const userId=`userId=${null}`;
+    request.getPromise(`http://localhost:8080/getOrdersBySearch`, {}).then(json => {
         if (json && json.length !== 0) {
             for(let i =0;i<json.length;i++){
                 const dateStr = date.format(new Date(json[i]['birthday']), 'yyyy-MM-dd');

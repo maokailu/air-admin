@@ -9,6 +9,7 @@ import zhCN from 'antd/lib/locale-provider/zh_CN';
 import moment from 'moment';
 import UserUnit from './user/';
 import FlightsUnit from './flights';
+import OrderUnit from './orders';
 import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
 import {
@@ -58,6 +59,10 @@ class App extends React.Component {
                   <Icon type="video-camera" />
                   <span><Link to="/flights" className='flights-unit-link'>航班管理</Link></span>
                 </Menu.Item>
+                <Menu.Item key="4">
+                  <Icon type="video-camera" />
+                  <span><Link to="/orders" className='orders-unit-link'>订单管理</Link></span>
+                </Menu.Item>
               </Menu>
             </Sider>
             <Layout>
@@ -75,6 +80,7 @@ class App extends React.Component {
               </Route>
               <Route path="/user" component={UserUnit}/>
               <Route path="/flights" component={FlightsUnit} />
+              <Route path="/orders" component={OrderUnit} />
             </Layout>
           </Layout>
         </Router>
