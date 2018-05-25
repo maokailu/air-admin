@@ -1,4 +1,4 @@
-import { Table, Input, InputNumber, Popconfirm, Form } from 'antd';
+import { Table, Input, InputNumber, Popconfirm, Form, DatePicker } from 'antd';
 import React from 'react';
 import ReactDOM from 'react-dom';
 const data = [];
@@ -17,8 +17,12 @@ const EditableFormRow = Form.create()(EditableRow);
 
 class EditableCell extends React.Component {
   getInput = () => {
+    // debugger
     if (this.props.inputType === 'number') {
       return <InputNumber />;
+    }
+    if(this.props.dataIndex === "userId") {
+      return <DatePicker defaultValue={moment('2015-01-01', 'YYYY-MM-DD')}/>;
     }
     return <Input />;
   };
@@ -75,33 +79,33 @@ export default class EditableTable extends React.Component {
         editable: true
       },
       {
-        title: 'idCardNumber',
+        title: '身份证号',
         dataIndex: 'idCardNumber',
         width: '20%',
         editable: true
       },
       {
-        title: 'password',
-        dataIndex: 'password',
+        title: '电话号码',
+        dataIndex: 'phone',
         width: '10%',
         editable: true
       },
       {
-        title: 'gender',
+        title: '性别',
         dataIndex: 'gender',
         width: '10%',
         editable: true
       },
       {
-        title: 'birthday',
+        title: '生日',
         dataIndex: 'birthday',
-        width: '10%',
+        width: '20%',
         editable: true
       },
       {
-        title: 'operation',
+        title: '操作',
         dataIndex: 'operation',
-        rowKey: 'operation',
+        // rowKey: 'operation',
         render: (text, record) => {
           const editable = this.isEditing(record);
           return (
@@ -112,22 +116,22 @@ export default class EditableTable extends React.Component {
                     {form => (
                       <a
                         href="javascript:;"
-                        onClick={() => this.validate(form, record.key)}
+                        onClick={() => this.validate(form, record.userId)}
                         style={{ marginRight: 8 }}
                       >
-                        Save
+                        保存
                       </a>
                     )}
                   </EditableContext.Consumer>
                   <Popconfirm
-                    title="Sure to cancel?"
-                    onConfirm={() => this.cancel(record.key)}
+                    title="确定取消?"
+                    onConfirm={() => this.cancel(record.userId)}
                   >
-                    <a>Cancel</a>
+                    <a>取消</a>
                   </Popconfirm>
                 </span>
               ) : (
-                <a onClick={() => this.edit(record.key)}>Edit</a>
+                <a onClick={() => this.edit(record.userId)}>编辑</a>
               )}
               <a className="delete-btn" href="javascript:;" onClick={()=>this.removeUser(record.userId)}>删除</a>
             </div>
@@ -136,33 +140,20 @@ export default class EditableTable extends React.Component {
       },
     ];
   }
-  componentDidMount() {
-    request.getPromise(`http://localhost:8080/getUsers?`, null).then(json => {
-        if (json && json.length !== 0) {
-            this.setState({
-              data: json
-            })
-        }
-    }, error => {
-        console.error('出错了', error);
-    });
-  }
   removeUser = key => {
     const userId = `userId=${key}`
     request.getPromise(`http://localhost:8080/deleteUser?${userId}`).then(json => {   
-      const newData = [...this.state.data];
+      const newData = [...this.props.data];
       const data = newData.filter((user, index) => {
         return (user.userId !== key)}
       );
-      this.setState({
-        data: data
-      })
+      this.props.updateData(data);
     }, error => {
         console.error('出错了', error);
     });
   }
   isEditing = (record) => {
-    return record.key === this.state.editingKey;
+    return record.userId === this.state.editingKey;
   };
   edit(key) {
     this.setState({ editingKey: key });
@@ -180,6 +171,7 @@ export default class EditableTable extends React.Component {
     });
   }  
   updateUser = (form, key, row) => {
+    console.log(row);
     request.getPromise(`http://localhost:8080/updateUser?`, row).then(json => {
         this.save(form, key, row);
     }, error => {
@@ -187,22 +179,27 @@ export default class EditableTable extends React.Component {
     });
   }
   save = (form, key, row) => {
-    const newData = [...this.state.data];
-    const index = newData.findIndex(item => key === item.key);
+    const newData = [...this.props.data];
+    const index = newData.findIndex(item => key === item.userId);
     if (index > -1) {
       const item = newData[index];
       newData.splice(index, 1, {
         ...item,
         ...row,
       });
-      this.setState({ data: newData, editingKey: '' });
+      this.props.updateData(newData);
+      this.setState({ editingKey: '' });
     } else {
       newData.push(data);
-      this.setState({ data: newData, editingKey: '' });
+      this.props.updateData(newData);
+      this.setState({ editingKey: '' });
     }
   }
   cancel = () => {
     this.setState({ editingKey: '' });
+  };
+  getInputType = col => {
+    col.dataIndex === 'age' ? 'number' : 'text';
   };
   render() {
     const components = {
@@ -220,7 +217,7 @@ export default class EditableTable extends React.Component {
         ...col,
         onCell: record => ({
           record,
-          inputType: col.dataIndex === 'age' ? 'number' : 'text',
+          inputType: this.getInputType(col),
           dataIndex: col.dataIndex,
           title: col.title,
           editing: this.isEditing(record),
@@ -232,7 +229,7 @@ export default class EditableTable extends React.Component {
       <Table
         components={components}
         bordered
-        dataSource={this.state.data}
+        dataSource={this.props.data}
         columns={columns}
         rowClassName="editable-row"
       />

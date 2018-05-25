@@ -49,16 +49,16 @@ class AdvancedSearchForm extends React.Component {
       );
     }
     console.log(this.props.form.getFieldsValue());
-    const userInfo = this.props.form.getFieldsValue();
-    this.searchUsers(userInfo);
+    const user = this.props.form.getFieldsValue();
+    this.searchUsers(user);
     return children;
   }
-  searchUsers = userInfo =>{
-    request.getPromise(`http://localhost:8080/getUsersBySearch?`, userInfo).then(json => {
+  searchUsers = user =>{
+    request.getPromise(`http://localhost:8080/getUsersBySearch`, user).then(json => {
         console.log(json);
-        this.setState({
-            data: json
-        })
+        // this.setState({
+        //     data: json
+        // })
     }, error => {
         console.error('出错了', error);
     });
@@ -72,12 +72,12 @@ class AdvancedSearchForm extends React.Component {
         <Row gutter={24}>{this.getFields()}</Row>
         <Row>
           <Col span={24} style={{ textAlign: 'right' }}>
-            <Button type="primary" htmlType="submit">Search</Button>
+            <Button type="primary" htmlType="submit">查询</Button>
             <Button style={{ marginLeft: 8 }} onClick={this.handleReset}>
-              Clear
+              清空
             </Button>
             <a style={{ marginLeft: 8, fontSize: 12 }} onClick={this.toggle}>
-              Collapse <Icon type={this.state.expand ? 'up' : 'down'} />
+              收起 <Icon type={this.state.expand ? 'up' : 'down'} />
             </a>
           </Col>
         </Row>
