@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 const FormItem = Form.Item;
 import request from '../utils/request';
 const Option = Select.Option;
+import date from '../utils/date';
 
 class AdvancedSearchForm extends React.Component {
   state = {
@@ -47,7 +48,7 @@ class AdvancedSearchForm extends React.Component {
           <Col span={8} key={i} style={{ display: i < count ? 'block' : 'none' }}>
             <FormItem label={field[i].name}>
               {getFieldDecorator(field[i].index)(
-                <DatePicker placeholder={"请选择时间"} format="YYYY-MM-DD"/>
+                <DatePicker placeholder={"请选择时间"}/>
               )}
             </FormItem>
           </Col>
@@ -106,6 +107,12 @@ class AdvancedSearchForm extends React.Component {
     return children;
   }
   searchUsers = user =>{
+    for(let item in user){
+        if(item === 'birthday') {
+          const dateStr = date.format(new Date(user[item]), 'yyyy-MM-dd');
+          user[item] = (new Date(dateStr)).getTime();
+        }
+    }
     request.getPromise(`http://localhost:8080/getUsersBySearch`, user).then(json => {
         if(json && json.length!==0){
           this.props.updateData(json);

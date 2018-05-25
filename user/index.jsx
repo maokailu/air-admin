@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Table, Icon, Divider } from 'antd';
 import request from '../utils/request';
+import date from '../utils/date';
 import TableApp from './table';
 import AdvancedSearchForm from './search-box';
 import CollectionsPage from './addUser';
@@ -15,8 +16,12 @@ export default class UserUnit extends React.Component {
     };
   }
   componentDidMount() {
-    request.getPromise(`http://localhost:8080/getUsers?`, null).then(json => {
+    request.getPromise(`http://localhost:8080/getUsersBySearch`, {}).then(json => {
         if (json && json.length !== 0) {
+            for(let i =0;i<json.length;i++){
+                const dateStr = date.format(new Date(json[i]['birthday']), 'yyyy-MM-dd');
+                json[i]['birthday'] = dateStr;
+            }
             this.setState({
               data: json
             })

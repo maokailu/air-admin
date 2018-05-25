@@ -180,15 +180,15 @@ export default class EditableTable extends React.Component {
     });
   }
   updateUser = (form, key, row) => {
-    // const user = {};
-    // for(let item in row){
-    //     if(item === 'birthday') {
-    //       user[item] = (new Date(row[item])).getTime();
-    //     } else {
-    //       user[item] = row[item];
-    //     }
-    // }
-    // console.log(user);
+    const user = {};
+    for(let item in row){
+        if(item === 'birthday') {
+          user[item] = (new Date(row[item])).getTime();
+        } else {
+          user[item] = row[item];
+        }
+    }
+    console.log(user);
     request.getPromise(`http://localhost:8080/updateUser`, row).then(json => {
         this.save(form, key, row);
     }, error => {
