@@ -2,25 +2,26 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Table, Icon, Divider } from 'antd';
 import request from '../utils/request';
+// import EditableTable from './editable-table';
 
 export default class UserUnit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      date: '',
+      date: '', 
       userData: ''
     };
   }
   componentDidMount() {
-    request.getPromise(`http://localhost:8080/getUsers?`, null).then(json => {
-        if (json && json.length !== 0) {
-            this.setState({
-              userData: json
-            })
-        }
-    }, error => {
-        console.error('出错了', error);
-    });
+    // request.getPromise(`http://localhost:8080/getUsers?`, null).then(json => {
+    //     if (json && json.length !== 0) {
+    //         this.setState({
+    //           userData: json
+    //         })
+    //     }
+    // }, error => {
+    //     console.error('出错了', error);
+    // });
   }
   render() {
     const columns = [{
@@ -65,7 +66,7 @@ export default class UserUnit extends React.Component {
     }];
     return (
       <div>
-        <Table columns={columns} dataSource={this.state.userData} />
+        {/* <EditableTable /> */}
       </div>
     );
   }

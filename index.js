@@ -7,7 +7,7 @@ const { Header, Sider, Content } = Layout;
 const TabPane = Tabs.TabPane;
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import moment from 'moment';
-import UserUnit from './table';
+import UserUnit from './table/editable-table.jsx';
 import FlightsUnit from './flights';
 import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
@@ -19,7 +19,7 @@ import {
   withRouter
 } from 'react-router-dom';
 import './index.css';
-import CollectionsPage from './form'
+import CollectionsPage from './form';
 
 class App extends React.Component {
   constructor(props) {
