@@ -34,7 +34,7 @@ export default class UserUnit extends React.Component {
     return (
       <div className="user">      
           <span className='add-btn'><CollectionsPage updateData={this.updateData}/></span>
-          <AdvancedSearchForm />
+          <AdvancedSearchForm updateData={this.updateData} />
           <div className="search-result-list">
             <TableApp data={this.state.data} updateData={this.updateData} />
           </div>

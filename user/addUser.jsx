@@ -169,7 +169,6 @@ export default class CollectionsPage extends React.Component {
         return;
       }
       for(let key in values){
-          console.log(key);
           if(key === 'birthday') {
             values[key] = values[key]._d.getTime();
           }

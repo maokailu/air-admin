@@ -6,6 +6,11 @@ const FormItem = Form.Item;
 const EditableContext = React.createContext();
 import request from '../utils/request';
 import './style.css';
+import locale from 'antd/lib/date-picker/locale/zh_CN';
+import moment from 'moment';
+import 'moment/locale/zh-cn';
+moment.locale('zh-cn');
+
 
 const EditableRow = ({ form, index, ...props }) => (
   <EditableContext.Provider value={form}>
@@ -17,12 +22,16 @@ const EditableFormRow = Form.create()(EditableRow);
 
 class EditableCell extends React.Component {
   getInput = () => {
-    // debugger
     if (this.props.inputType === 'number') {
       return <InputNumber />;
     }
     if(this.props.dataIndex === "userId") {
-      return <DatePicker defaultValue={moment('2015-01-01', 'YYYY-MM-DD')}/>;
+      return <Input disabled/>
+    }
+    if(this.props.dataIndex === "birthday"){
+      console.log(this.props.children[2])
+      return <Input type='date' />;
+      // return <Input type='date' value={this.props.children[2]} />;
     }
     return <Input />;
   };
@@ -169,10 +178,18 @@ export default class EditableTable extends React.Component {
       }
       this.updateUser(form, key, row);
     });
-  }  
+  }
   updateUser = (form, key, row) => {
-    console.log(row);
-    request.getPromise(`http://localhost:8080/updateUser?`, row).then(json => {
+    // const user = {};
+    // for(let item in row){
+    //     if(item === 'birthday') {
+    //       user[item] = (new Date(row[item])).getTime();
+    //     } else {
+    //       user[item] = row[item];
+    //     }
+    // }
+    // console.log(user);
+    request.getPromise(`http://localhost:8080/updateUser`, row).then(json => {
         this.save(form, key, row);
     }, error => {
         console.error('出错了', error);
