@@ -7,7 +7,7 @@ const { Header, Sider, Content } = Layout;
 const TabPane = Tabs.TabPane;
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import moment from 'moment';
-import UserUnit from './table/editable-table.jsx';
+import UserUnit from './user-unit/';
 import FlightsUnit from './flights';
 import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
