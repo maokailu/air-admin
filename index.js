@@ -2,13 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 // import { LocaleProvider, DatePicker, message, Tree,Table, Icon, Divider } from 'antd';
 // 默认文案是英文，所以需要修改为中文
-import { Layout, Menu, Icon, Tabs } from 'antd';
+import { Layout, Menu, Icon, Tabs,Avatar  } from 'antd';
 const { Header, Sider, Content } = Layout;
 const TabPane = Tabs.TabPane;
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import moment from 'moment';
 import UserUnit from './user/';
 import OrderUnit from './orders';
+import Charts from './charts';
 import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
 import PropTypes from 'prop-types';
@@ -60,7 +61,7 @@ class App extends React.Component {
               <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
                 <Menu.Item key="1">
                   <Icon type="home" />
-                  <span><Link to="/" className='home'>主页</Link></span>
+                  <span><Link to="/home" className='home'>报表分析</Link></span>
                 </Menu.Item>
                 <Menu.Item key="2">
                   <Icon type="user" />
@@ -78,13 +79,17 @@ class App extends React.Component {
                   className="trigger"
                   type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
                   onClick={this.toggle}
+                  style={{marginLeft:'20px', 
+                  fontSize: '20px'}}
                 />
+                <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>
               </Header>
-              <Route path="/">
+              <Route path="/home" component={Charts}>
                 {/* <div>您好，这里是航空订票系统！</div> */}
               </Route>
               <Route path="/user" component={UserUnit}/>
               <Route path="/orders" component={OrderUnit} />
+              <Redirect path="/" to={{pathname: '/home'}} />
             </Layout>
           </Layout>
         </HashRouter>
