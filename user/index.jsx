@@ -17,11 +17,11 @@ export default class UserUnit extends React.Component {
   }
   componentDidMount() {
     request.getPromise(`http://localhost:8080/getUsersBySearch`, {}).then(json => {
-        if (json && json.length !== 0) {
-            for(let i =0;i<json.length;i++){
-                const dateStr = date.format(new Date(json[i]['birthday']), 'yyyy-MM-dd');
-                json[i]['birthday'] = dateStr;
-            }
+        if (json) {
+            // for(let i =0;i<json.length;i++){
+            //     const dateStr = date.format(new Date(json[i]['birthday']), 'yyyy-MM-dd');
+            //     json[i]['birthday'] = dateStr;
+            // }
             this.setState({
               data: json
             })
@@ -38,8 +38,8 @@ export default class UserUnit extends React.Component {
   render() {
     return (
       <div className="user">      
-          <span className='add-btn'><CollectionsPage updateData={this.updateData}/></span>
           <AdvancedSearchForm updateData={this.updateData} />
+          {/* <span className='add-btn'><CollectionsPage updateData={this.updateData}/></span> */}
           <div className="search-result-list">
             <TableApp data={this.state.data} updateData={this.updateData} />
           </div>

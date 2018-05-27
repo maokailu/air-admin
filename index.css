@@ -3,11 +3,21 @@ html, body, #root {
   height: 100%;
 }
 
-.user-unit-link, .flights-unit-link{
+.home, .user-unit-link, .orders-unit-link{
   color: rgba(255, 255, 255, 0.65);
   text-decoration:none; 
+  font-size: 18px;
 }
-a:focus{
+.home:focus, .user-unit-link:focus, .orders-unit-link:focus{
+  text-decoration:none; 
+}
+.home:hover, .user-unit-link:hover, .orders-unit-link:hover{
+  -webkit-transition: opacity 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), width 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition: opacity 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), width 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  opacity: 1; 
+  color: #fff;
+}
+/* a:focus{
   text-decoration:none; 
 }
 a:hover{
@@ -15,4 +25,7 @@ a:hover{
   transition: opacity 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), width 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
   opacity: 1; 
   color: #fff;
-}
+} */
+/* .user-edit-btn:hover{
+  color: #1890ff;
+} */

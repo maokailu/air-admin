@@ -8,16 +8,16 @@ const TabPane = Tabs.TabPane;
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import moment from 'moment';
 import UserUnit from './user/';
-import FlightsUnit from './flights';
 import OrderUnit from './orders';
 import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
+import PropTypes from 'prop-types';
 import {
   BrowserRouter as Router,
   Route,
   Link,
   Redirect,
-  withRouter
+  withRouter,HashRouter
 } from 'react-router-dom';
 import './index.css';
 
@@ -29,61 +29,65 @@ class App extends React.Component {
       date: '',
     };
   }
+  // static contextTypes = {
+  //     router: PropTypes.object.isRequired
+  // }
   toggle = () => {
     this.setState({
       collapsed: !this.state.collapsed,
     });
   }
+  goToUser=()=>{
+    debugger
+    const path = {
+      pathname: `/user`,
+      // search: query
+    };
+    this.context.router.history.push(path);
+  }
   render() {
     return (
       <div>
-        <Router>
-          <Layout>
+        <HashRouter>
+          <Layout 
+              style={{height:'100vh'}}>
             <Sider
               trigger={null}
               collapsible
               collapsed={this.state.collapsed}
-              style={{ height: '100vh' }}
             >
               <div className="logo" />
               <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
                 <Menu.Item key="1">
                   <Icon type="home" />
-                  <span><Link to="/" className=''>主页</Link></span>
+                  <span><Link to="/" className='home'>主页</Link></span>
                 </Menu.Item>
                 <Menu.Item key="2">
                   <Icon type="user" />
-                  <span><Link to="/user" className='user-unit-link'>用户管理</Link></span>
+                  <span><Link to={{pathname: 'user',state: { fromDashboard: true }}} className='user-unit-link'>用户管理</Link></span>
                 </Menu.Item>
                 <Menu.Item key="3">
-                  <Icon type="video-camera" />
-                  <span><Link to="/flights" className='flights-unit-link'>航班管理</Link></span>
-                </Menu.Item>
-                <Menu.Item key="4">
                   <Icon type="video-camera" />
                   <span><Link to="/orders" className='orders-unit-link'>订单管理</Link></span>
                 </Menu.Item>
               </Menu>
             </Sider>
             <Layout>
-              <div>
-                <Header style={{ background: '#fff', padding: 0 }}>
-                  <Icon
-                    className="trigger"
-                    type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
-                    onClick={this.toggle}
-                  />
-                </Header>
-              </div>
+              <Header style={{ background: '#fff', padding: 0 }}>
+                <Icon
+                  className="trigger"
+                  type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
+                  onClick={this.toggle}
+                />
+              </Header>
               <Route path="/">
                 {/* <div>您好，这里是航空订票系统！</div> */}
               </Route>
               <Route path="/user" component={UserUnit}/>
-              <Route path="/flights" component={FlightsUnit} />
               <Route path="/orders" component={OrderUnit} />
             </Layout>
           </Layout>
-        </Router>
+        </HashRouter>
       </div>
     );
   }

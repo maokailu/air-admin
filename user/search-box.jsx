@@ -5,6 +5,7 @@ const FormItem = Form.Item;
 import request from '../utils/request';
 const Option = Select.Option;
 import date from '../utils/date';
+import CollectionsPage from './addUser';
 
 class AdvancedSearchForm extends React.Component {
   state = {
@@ -32,7 +33,7 @@ class AdvancedSearchForm extends React.Component {
 
   // To generate mock Form.Item
   getFields() {
-    const count = this.state.expand ? 10 : 6;
+    const count = this.state.expand ? 6 : 3;
     const { getFieldDecorator } = this.props.form;
     const children = [];
     const field = [
@@ -114,7 +115,7 @@ class AdvancedSearchForm extends React.Component {
         }
     }
     request.getPromise(`http://localhost:8080/getUsersBySearch`, user).then(json => {
-        if(json && json.length!==0){
+        if(json){
           this.props.updateData(json);
         }
     }, error => {
@@ -130,12 +131,13 @@ class AdvancedSearchForm extends React.Component {
         <Row gutter={24}>{this.getFields()}</Row>
         <Row>
           <Col span={24} style={{ textAlign: 'right' }}>
+            <Button className='add-btn'><CollectionsPage {...this.props}/></Button>
             <Button type="primary" htmlType="submit">查询</Button>
             <Button style={{ marginLeft: 8 }} onClick={this.handleReset}>
               清空
             </Button>
             <a style={{ marginLeft: 8, fontSize: 12 }} onClick={this.toggle}>
-              收起 <Icon type={this.state.expand ? 'up' : 'down'} />
+              {this.state.expand ? '收起' : '展开' } <Icon type={this.state.expand ? 'up' : 'down'} />
             </a>
           </Col>
         </Row>

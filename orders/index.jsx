@@ -16,13 +16,9 @@ export default class OrderUnit extends React.Component {
     };
   }
   componentDidMount() {
-    const userId=`userId=${null}`;
-    request.getPromise(`http://localhost:8080/getOrdersBySearch`, {}).then(json => {
-        if (json && json.length !== 0) {
-            for(let i =0;i<json.length;i++){
-                const dateStr = date.format(new Date(json[i]['birthday']), 'yyyy-MM-dd');
-                json[i]['birthday'] = dateStr;
-            }
+    request.getPromise(`http://localhost:8080/getOrders`, {}).then(json => {
+      console.log('order'+json)
+        if (json) {
             this.setState({
               data: json
             })

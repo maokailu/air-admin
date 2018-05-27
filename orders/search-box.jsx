@@ -36,53 +36,16 @@ class AdvancedSearchForm extends React.Component {
     const { getFieldDecorator } = this.props.form;
     const children = [];
     const field = [
-    {name: '账号', index: 'userId', message: '请输入账号'},
-    {name: '姓名', index: 'userName', message: '请输入姓名'}, 
-    {name: '性别', index: 'gender', message: '请输入性别'}, 
-    {name: '电话', index: 'phone', message: '请输入电话'}, 
-    {name: '身份证号', index: 'idCardNumber', message: '请输入身份证号'},
-    {name: '出生日期', index: 'birthday', message: '请输入出生日期'}];
+    {name: '订单号', index: 'orderId', message: '请输入订单号'},
+    {name: '订单日期', index: 'orderDate', message: '请输入订单日期'}, 
+    {name: '用户名', index: 'user.userId', message: '请输入用户账号'}];
     for (let i = 0; i < field.length; i++) {
-      if(field[i].index === 'birthday'){
+      if(field[i].index === 'orderDate'){
         children.push(
           <Col span={8} key={i} style={{ display: i < count ? 'block' : 'none' }}>
             <FormItem label={field[i].name}>
               {getFieldDecorator(field[i].index)(
                 <DatePicker placeholder={"请选择时间"}/>
-              )}
-            </FormItem>
-          </Col>
-        );
-      }else if(field[i].index === 'gender'){
-        children.push(
-          <Col span={8} key={i} style={{ display: i < count ? 'block' : 'none' }}>
-            <FormItem label={field[i].name}>
-              {getFieldDecorator(field[i].index, {
-                rules: [{
-                  message: field[i].message,
-                }],
-              })(
-                <Select
-                  placeholder="选择用户性别"
-                >
-                  <Option value="">全选</Option>
-                  <Option value="男">男</Option>
-                  <Option value="女">女</Option>
-                </Select>
-              )}
-            </FormItem>
-          </Col>
-        );
-      }else if(field[i].index === 'userId'){
-        children.push(
-          <Col span={8} key={i} style={{ display: i < count ? 'block' : 'none' }}>
-            <FormItem label={field[i].name}>
-              {getFieldDecorator(field[i].index, {
-                rules: [{
-                  message: field[i].message,
-                }],
-              })(
-                <Input placeholder={field[i].message} />
               )}
             </FormItem>
           </Col>
@@ -106,15 +69,15 @@ class AdvancedSearchForm extends React.Component {
     console.log(this.props.form.getFieldsValue());
     return children;
   }
-  searchUsers = user =>{
-    for(let item in user){
-        if(item === 'birthday') {
-          const dateStr = date.format(new Date(user[item]), 'yyyy-MM-dd');
-          user[item] = (new Date(dateStr)).getTime();
+  searchUsers = order =>{
+    for(let item in order){
+        if(item === 'orderDate') {
+          const dateStr = date.format(new Date(order[item]), 'yyyy-MM-dd');
+          order[item] = (new Date(dateStr)).getTime();
         }
     }
-    request.getPromise(`http://localhost:8080/getUsersBySearch`, user).then(json => {
-        if(json && json.length!==0){
+    request.getPromise(`http://localhost:8080/getOrders`, order).then(json => {
+        if(json){
           this.props.updateData(json);
         }
     }, error => {

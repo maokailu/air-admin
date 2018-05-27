@@ -10,6 +10,7 @@ import locale from 'antd/lib/date-picker/locale/zh_CN';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
+import date from '../utils/date';
 
 
 const EditableRow = ({ form, index, ...props }) => (
@@ -109,7 +110,12 @@ export default class EditableTable extends React.Component {
         title: '生日',
         dataIndex: 'birthday',
         width: '20%',
-        editable: true
+        editable: true, 
+        render:(text, record) => {
+          return (
+            date.format(new Date(record.birthday), 'yyyy-MM-dd')
+          );
+        }
       },
       {
         title: '操作',
@@ -140,7 +146,7 @@ export default class EditableTable extends React.Component {
                   </Popconfirm>
                 </span>
               ) : (
-                <a onClick={() => this.edit(record.userId)}>编辑</a>
+                <a onClick={() => this.edit(record.userId)} className="user-edit-btn">编辑</a>
               )}
               <a className="delete-btn" href="javascript:;" onClick={()=>this.removeUser(record.userId)}>删除</a>
             </div>
@@ -249,6 +255,7 @@ export default class EditableTable extends React.Component {
         dataSource={this.props.data}
         columns={columns}
         rowClassName="editable-row"
+        size = 'small'
       />
     );
   }
