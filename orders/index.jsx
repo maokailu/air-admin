@@ -5,7 +5,6 @@ import request from '../utils/request';
 import date from '../utils/date';
 import TableApp from './table';
 import AdvancedSearchForm from './search-box';
-import CollectionsPage from './addUser';
 import './style.css';
 
 export default class OrderUnit extends React.Component {
@@ -34,8 +33,7 @@ export default class OrderUnit extends React.Component {
   }
   render() {
     return (
-      <div className="user">      
-          <span className='add-btn'><CollectionsPage updateData={this.updateData}/></span>
+      <div className="user">
           <AdvancedSearchForm updateData={this.updateData} />
           <div className="search-result-list">
             <TableApp data={this.state.data} updateData={this.updateData} />

@@ -163,19 +163,19 @@ export default class EditableTable extends React.Component {
         editable: true
       },
       {
-        title: '联系人名字',
+        title: '联系人',
         dataIndex: 'concactName',
         width: '5%',
         editable: true
       },
       {
-        title: '联系人邮箱',
+        title: '联系邮箱',
         dataIndex: 'email',
         width: '10%',
         editable: true
       },
       {
-        title: '联系人手机',
+        title: '联系手机',
         dataIndex: 'cellphone',
         width: '10%',
         editable: true
@@ -191,19 +191,21 @@ export default class EditableTable extends React.Component {
           );
         },
       },
-      { title: '订单状态', width: '10%',key: 'orderState', render: () => <span><Badge status="success" />Finished</span> },
+      { title: '订单状态', width: '10%',key: 'orderState', render: (text, record) =>
+      {return (record.orderState === 1 ? (<span><Badge status="success" />Finished</span>) :
+      (<span><Badge status="error" />Canceled</span>)) }},
       {
-        title: '订单票价',
+        title: '票价',
         dataIndex: 'totalTicketPrice',
         width: '5%',
         editable: true
       },
-      {
-        title: '基建燃油费',
-        dataIndex: 'totalFuelSurcharge',
-        width: '5%',
-        editable: true
-      },
+      // {
+      //   title: '基建燃油费',
+      //   dataIndex: 'totalFuelSurcharge',
+      //   width: '5%',
+      //   editable: true
+      // },
       {
         title: '税费',
         dataIndex: 'totalAirportTax',
@@ -360,8 +362,8 @@ export default class EditableTable extends React.Component {
         { title: '航班号', width: '4%', dataIndex: 'ticket.flightId', key: 'ticket.flightId'},
         { title: '票价', width: '2%', dataIndex: 'ticket.ticketPrice', key: 'ticket.ticketPrice'},
         { title: '税费', width: '2%', dataIndex: 'ticket.airportTax', key: 'ticket.airportTax'},
-        { title: '燃油费', width: '2%', dataIndex: 'ticket.fuelCharge', key: 'ticket.fuelCharge'},
-        { title: '舱位类型', width: '3%', dataIndex: 'ticket.cabinClass.cabinClassName', key: 'ticket.cabinClass.cabinClassName'},
+        // { title: '燃油费', width: '2%', dataIndex: 'ticket.fuelCharge', key: 'ticket.fuelCharge'},
+        { title: '类型', width: '3%', dataIndex: 'ticket.cabinClass.cabinClassName', key: 'ticket.cabinClass.cabinClassName'},
         { title: '出发城市', width: '2%', dataIndex: 'ticket.flight.departCityName', key: 'ticket.flight.departCityName'},
         { title: '到达城市', width: '2%', dataIndex: 'ticket.flight.arriveCityName', key: 'ticket.flight.arriveCityName'},
         { title: '出发机场',  width: '3%',dataIndex: 'ticket.flight.departAirportName', key: 'ticket.flight.departAirportName'},
