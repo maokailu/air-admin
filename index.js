@@ -89,7 +89,7 @@ class App extends React.Component {
               </Route>
               <Route path="/user" component={UserUnit}/>
               <Route path="/orders" component={OrderUnit} />
-              <Redirect path="/" to={{pathname: '/home'}} />
+              f
             </Layout>
           </Layout>
         </HashRouter>

@@ -76,7 +76,7 @@ class AdvancedSearchForm extends React.Component {
           order[item] = (new Date(dateStr)).getTime();
         }
     }
-    request.getPromise(`http://localhost:8080/getOrders`, order).then(json => {
+    request.getPromise(`getOrders`, order).then(json => {
         if(json){
           this.props.updateData(json);
         }

@@ -16,7 +16,7 @@ export default class UserUnit extends React.Component {
     };
   }
   componentDidMount() {
-    request.getPromise(`http://localhost:8080/getUsersBySearch`, {}).then(json => {
+    request.getPromise(`getUsersBySearch`, {}).then(json => {
         if (json) {
             // for(let i =0;i<json.length;i++){
             //     const dateStr = date.format(new Date(json[i]['birthday']), 'yyyy-MM-dd');

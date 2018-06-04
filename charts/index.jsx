@@ -38,7 +38,7 @@ class Charts extends React.Component {
 
         
 
-        request.getPromise(`http://localhost:8080/getOrderNumByDate`).then(json => {
+        request.getPromise(`getOrderNumByDate`).then(json => {
         if (json) {
             for(let i = 0;i<json.length;i++){
                 orderDates.push(date.format(new Date(json[i].orderDate), 'yyyy-MM-dd'));
@@ -140,7 +140,7 @@ class Charts extends React.Component {
 
         
 
-        request.getPromise(`http://localhost:8080/getOrderNumByDate`).then(json => {
+        request.getPromise(`getOrderNumByDate`).then(json => {
         if (json) {
             for(let i = 0;i < 6;i++){
                 orderDates.push(date.format(new Date(json[i].orderDate), 'yyyy-MM-dd'));

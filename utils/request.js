@@ -37,7 +37,9 @@ const getPromise = (url, params) => {
             }
         };
         const client = new XMLHttpRequest();
-        client.open('POST', url);
+        let path = './' + url;
+        console.log(path)
+        client.open('POST', path);
         client.onreadystatechange = handler;
         client.responseType = 'json';
         client.setRequestHeader('Accept', 'application/json');

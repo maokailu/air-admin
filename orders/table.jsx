@@ -263,7 +263,7 @@ export default class EditableTable extends React.Component {
   }
   removeUser = key => {
     const userId = `userId=${key}`
-    request.getPromise(`http://localhost:8080/deleteUser?${userId}`).then(json => {   
+    request.getPromise(`deleteUser?${userId}`).then(json => {   
       const newData = [...this.props.data];
       const data = newData.filter((user, index) => {
         return (user.userId !== key)}
@@ -301,7 +301,7 @@ export default class EditableTable extends React.Component {
         }
     }
     console.log(user);
-    request.getPromise(`http://localhost:8080/updateUser`, row).then(json => {
+    request.getPromise(`updateUser`, row).then(json => {
         this.save(form, key, row);
     }, error => {
         console.error('出错了', error);

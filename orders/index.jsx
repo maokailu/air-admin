@@ -15,7 +15,7 @@ export default class OrderUnit extends React.Component {
     };
   }
   componentDidMount() {
-    request.getPromise(`http://localhost:8080/getOrders`, {}).then(json => {
+    request.getPromise(`getOrders`, {}).then(json => {
       console.log('order'+json)
         if (json) {
             this.setState({

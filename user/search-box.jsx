@@ -114,7 +114,7 @@ class AdvancedSearchForm extends React.Component {
           user[item] = (new Date(dateStr)).getTime();
         }
     }
-    request.getPromise(`http://localhost:8080/getUsersBySearch`, user).then(json => {
+    request.getPromise(`getUsersBySearch`, user).then(json => {
         if(json){
           this.props.updateData(json);
         }

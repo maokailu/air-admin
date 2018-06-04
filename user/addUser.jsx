@@ -176,12 +176,12 @@ export default class CollectionsPage extends React.Component {
       const params = values;
       delete params.prefix;
       delete params.confirm;
-      request.getPromise(`http://localhost:8080/addUser`, values).then(json => {
+      request.getPromise(`addUser`, values).then(json => {
         if(json === 0) {
           console.log("未知原因，插入失败,请返回或重试！");
           return;
         };
-        request.getPromise(`http://localhost:8080/getUsers`, null).then(json => {
+        request.getPromise(`getUsers`, null).then(json => {
           if(!json || json.length === 0) {
             console.log("没有获取到数据！");
             return;
