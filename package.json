@@ -38,6 +38,7 @@
     "build": "atool-build",
     "lint": "eslint --ext .js,.jsx src/",
     "start": "dora --plugins webpack",
-    "test": "atool-test-mocha ./**/__tests__/*-test.js"
+    "test": "atool-test-mocha ./**/__tests__/*-test.js",
+    "build-prod": "set NODE_ENV=production && webpack --config ./webpack.prod.config.js"
   }
 }
